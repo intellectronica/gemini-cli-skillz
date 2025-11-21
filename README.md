@@ -17,6 +17,13 @@ gemini extensions install https://github.com/intellectronica/gemini-cli-skillz
    mkdir -p ~/.skillz
    ```
 
+   **Or, if you already use Claude Code skills**, create a symbolic link:
+   ```bash
+   ln -s ~/.claude/skills ~/.skillz
+   ```
+
+   This allows you to share the same skills directory between Claude Code and Gemini CLI without copying files or modifying the extension configuration.
+
 2. **Add skills** to the directory. Each skill is a folder with a SKILL.md file.
 
 3. **Restart Gemini CLI** to load the skills.
