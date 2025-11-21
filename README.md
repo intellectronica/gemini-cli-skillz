@@ -47,23 +47,13 @@ Skills are invoked automatically based on your task. Example:
 
 ## Configuration
 
-The extension uses `~/.skillz` as the default skills directory (configured in the skillz MCP server itself).
+The extension uses `~/.skillz` as the default skills directory (skillz's built-in default).
 
 ### Using a Custom Skills Directory
 
-To use a different skills directory, you have two options:
+To use a different skills directory, edit the extension configuration:
 
-**Option 1: Set shell environment variable** (recommended)
-```bash
-# Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
-export SKILLS_PATH=/path/to/your/skills
-```
-
-The skillz server will automatically use this path if set.
-
-**Option 2: Edit extension configuration**
-
-Edit `~/.gemini/extensions/skillz/gemini-extension.json` and modify the args array:
+**Edit `~/.gemini/extensions/skillz/gemini-extension.json`** and add your custom path to the args array:
 ```json
 {
   "mcpServers": {
@@ -71,13 +61,18 @@ Edit `~/.gemini/extensions/skillz/gemini-extension.json` and modify the args arr
       "command": "uvx",
       "args": [
         "skillz@latest",
-        "/path/to/your/skills",
+        "/absolute/path/to/your/skills",
         "--verbose"
       ]
     }
   }
 }
 ```
+
+**Important notes:**
+- Use an absolute path (e.g., `/Users/you/my-skills`)
+- Tilde (`~`) won't expand - use full path like `/Users/yourusername/.skillz`
+- Or use `$HOME/.custom-skills` if your shell expands it before Gemini CLI sees it
 
 Then restart Gemini CLI.
 
@@ -101,8 +96,9 @@ Then restart Gemini CLI.
 - Install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
 **Custom skills directory not working**:
-- Verify SKILLS_PATH is exported in your shell: `echo $SKILLS_PATH`
-- Or check that you edited gemini-extension.json correctly (see Configuration section)
+- Verify you're using an absolute path (no `~` tilde)
+- Check that you edited gemini-extension.json correctly (see Configuration section)
+- Ensure the path exists: `ls -la /your/custom/path`
 
 ## About
 
