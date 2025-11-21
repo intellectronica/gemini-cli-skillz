@@ -1,28 +1,17 @@
 {
   "name": "skillz",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Load Claude-style skills into Gemini CLI using the Skillz MCP server",
   "author": "Eleanor Berger <eleanor@intellectronica.net>",
   "repository": "https://github.com/intellectronica/skillz",
-  "settings": [
-    {
-      "name": "SKILLS_PATH",
-      "description": "Path to skills directory (defaults to ~/.skillz if not specified)",
-      "required": false
-    }
-  ],
   "mcpServers": {
     "skillz": {
       "command": "uvx",
       "args": [
         "skillz@latest",
-        "${SKILLS_PATH:-~/.skillz}",
         "--verbose"
       ],
-      "timeout": 123456,
-      "env": {
-        "SKILLS_PATH": "${SKILLS_PATH}"
-      }
+      "timeout": 123456
     }
   },
   "contextFileName": "GEMINI.md"
