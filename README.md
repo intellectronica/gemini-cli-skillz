@@ -8,7 +8,7 @@ Run Anthropic-style Agent Skills in Gemini CLI using the [skillz MCP server](htt
 gemini extensions install https://github.com/intellectronica/gemini-cli-skillz
 ```
 
-During installation, you'll be prompted to specify a skills directory. Press Enter to use the default (`~/.skillz`) or provide a custom path.
+**Note**: If the GitHub release download fails with a 415 error, answer "Y" when prompted to install via git clone instead.
 
 ## Setup
 
@@ -47,13 +47,36 @@ Skills are invoked automatically based on your task. Example:
 
 ## Configuration
 
-The extension defaults to `~/.skillz` for skills location.
+The extension uses `~/.skillz` as the default skills directory (configured in the skillz MCP server itself).
 
-### Changing Skills Directory
+### Using a Custom Skills Directory
 
-Edit `~/.gemini/extensions/skillz/.env`:
+To use a different skills directory, you have two options:
+
+**Option 1: Set shell environment variable** (recommended)
 ```bash
-SKILLS_PATH=/path/to/your/skills
+# Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
+export SKILLS_PATH=/path/to/your/skills
+```
+
+The skillz server will automatically use this path if set.
+
+**Option 2: Edit extension configuration**
+
+Edit `~/.gemini/extensions/skillz/gemini-extension.json` and modify the args array:
+```json
+{
+  "mcpServers": {
+    "skillz": {
+      "command": "uvx",
+      "args": [
+        "skillz@latest",
+        "/path/to/your/skills",
+        "--verbose"
+      ]
+    }
+  }
+}
 ```
 
 Then restart Gemini CLI.
@@ -77,10 +100,9 @@ Then restart Gemini CLI.
 **uvx command not found**:
 - Install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
-**Change skills directory after installation**:
-- Edit `~/.gemini/extensions/skillz/.env`
-- Set `SKILLS_PATH=/your/path`
-- Restart Gemini CLI
+**Custom skills directory not working**:
+- Verify SKILLS_PATH is exported in your shell: `echo $SKILLS_PATH`
+- Or check that you edited gemini-extension.json correctly (see Configuration section)
 
 ## About
 
